@@ -5,26 +5,19 @@ import (
 	"fmt"
 )
 
-func b() (string, error) {
-	return "hello", errors.New("error B")
-}
+func b() error { return errors.New("B") }
 
-
-func a() (n int, err error) {
-	if n != 0 {
-		return 1, nil
-	}
-
+func a() (err error) {
 	resolve := func() {
-		output, err := b()
+		err = b()
 		if err != nil {
-			err = fmt.Errorf("failed to list modules: %v\n%s", err, output)
+			err = fmt.Errorf("error: %v", err)
 			return
 		}
 	}
 
 	resolve()
-	return n, err
+	return
 }
 
 func main() {
